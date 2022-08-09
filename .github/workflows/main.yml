@@ -31,7 +31,7 @@ jobs:
     - name: Build the Solution
       run: msbuild Structurizr.sln /p:Configuration=Release  /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release"
     - name: dotnet publish
-      run: mspublish -c Release -o build
+      run: dotnet publish -c Release -o build
 
     - name: Tar files
       run: tar -cvf published_webapp.tar build
