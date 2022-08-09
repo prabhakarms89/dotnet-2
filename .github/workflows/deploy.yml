@@ -23,7 +23,7 @@ jobs:
   - name: Downdload artifact
     uses: dawidd6/action-download-artifact@v2
     with:
-      workflow: conserve-api.yml
+      workflow: build.yml
       workflow_conclusion: success
       name: published_webapp.zip
       path: C:\actions-runner\_work\published_webapp\
