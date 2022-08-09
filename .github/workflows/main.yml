@@ -41,3 +41,27 @@ jobs:
       with:
           name: published_webapp.zip
           path: ./published_webapp.zip
+  
+  Deploy: 
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+    
+    - name: Downdload artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: main.yml
+        workflow_conclusion: success
+        name: published_webapp.zip
+        path: C:\actions-runner\_work\published_webapp\
+      
+    - name: Extract Tar archive
+      run: Expand-Archive -LiteralPath C:\actions-runner\_work\published_webapp\published_webapp.zip -DestinationPath C:\actions-runner\_work\published_webapp\     
+    - name: Deploy to IIS
+      run: |
+          iisreset /stop
+          Remove-Item C:\actions-runner\_work\published_webapp\published_webapp.zip
+          Copy-Item C:\actions-runner\_work\published_webapp\_build\* D:\deployment -Recurse -Force
+          iisreset /start
+
