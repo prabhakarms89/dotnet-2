@@ -49,10 +49,8 @@ jobs:
     steps:
     
     - name: Downdload artifact
-      uses: dawidd6/action-download-artifact@v2
+      uses: actions/download-artifact@v3.0.0
       with:
-        workflow: main.yml
-        workflow_conclusion: success
         name: published_webapp.zip
         path: C:\actions-runner\_work\published_webapp\
       
