@@ -39,5 +39,5 @@ jobs:
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
-          name: published_webapp.tar
+          name: published_webapp.zip
           path: ./published_webapp.zip
