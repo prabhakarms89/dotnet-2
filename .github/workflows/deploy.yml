@@ -1,0 +1,38 @@
+name: Deploy Artifact
+
+# Only trigger, when the build workflow succeeded 
+on:
+  workflow_run:
+    workflows: ["ConserveApi"]
+    types:
+      - completed      
+jobs:
+
+ on-success:
+    runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo 'The triggering workflow passed'
+      
+ Deploy: 
+  runs-on: self-hosted
+  needs: on-success
+
+  steps:
+    
+  - name: Downdload artifact
+    uses: dawidd6/action-download-artifact@v2
+    with:
+      workflow: conserve-api.yml
+      workflow_conclusion: success
+      name: published_webapp.zip
+      path: C:\actions-runner\_work\published_webapp\
+      
+  - name: Extract Tar archive
+    run: Expand-Archive -LiteralPath C:\actions-runner\_work\published_webapp\published_webapp.zip -DestinationPath C:\actions-runner\_work\published_webapp\     
+  - name: Deploy to IIS
+    run: |
+        iisreset /stop
+        Remove-Item C:\actions-runner\_work\published_webapp\published_webapp.tar
+        Copy-Item C:\actions-runner\_work\published_webapp\_build\* D:\deployment -Recurse -Force
+        iisreset /start
