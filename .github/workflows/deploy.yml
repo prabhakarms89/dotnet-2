@@ -26,10 +26,10 @@ jobs:
       workflow: main.yml
       workflow_conclusion: success
       name: published_webapp.zip
-      path: .
+      path: ./published_webapp.zip
       
   - name: Extract Tar archive
-    run: Expand-Archive -LiteralPath .\published_webapp.zip -DestinationPath C:\actions-runner\_work\published_webapp\     
+    run: Expand-Archive -LiteralPath ./published_webapp.zip -DestinationPath C:\actions-runner\_work\published_webapp\     
   - name: Deploy to IIS
     run: |
         iisreset /stop
