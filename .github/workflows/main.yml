@@ -33,11 +33,11 @@ jobs:
     - name: dotnet publish
       run: dotnet publish -c Release -o build
 
-    - name: Tar files
-      run: tar -cvf published_webapp.tar build
+    - name: Zip files
+      run: tar -a -c -f published_webapp.zip build
       
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
           name: published_webapp.tar
-          path: ./published_webapp.tar
+          path: ./published_webapp.zip
