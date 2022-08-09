@@ -3,7 +3,7 @@ name: Deploy Artifact
 # Only trigger, when the build workflow succeeded 
 on:
   workflow_run:
-    workflows: ["ConserveApi"]
+    workflows: ["CI"]
     types:
       - completed      
 jobs:
