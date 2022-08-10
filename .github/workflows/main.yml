@@ -33,7 +33,7 @@ jobs:
     - name: dotnet publish
       run: dotnet publish -c Release -o build
 
-    - name: Zip files
+    - name: Zip the artifact file
       run: tar -a -c -f published_webapp.zip build
       
     - name: Upload artifact for deployment job
@@ -54,7 +54,7 @@ jobs:
         name: published_webapp.zip
         path: C:\actions-runner\_work\published_webapp\
       
-    - name: Extract Tar archive
+    - name: Extract Zip archive
       run: Expand-Archive -LiteralPath C:\actions-runner\_work\published_webapp\published_webapp.zip -DestinationPath C:\actions-runner\_work\published_webapp\     
     - name: Deploy to IIS
       run: |
@@ -62,4 +62,3 @@ jobs:
           Remove-Item C:\actions-runner\_work\published_webapp\published_webapp.zip
           Copy-Item C:\actions-runner\_work\published_webapp\_build\* D:\deployment -Recurse -Force
           iisreset /start
-
