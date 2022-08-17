@@ -30,12 +30,6 @@ steps:
     configuration: '$(buildConfiguration)'
 
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(build.artifactStagingDirectory)'
-    ArtifactName: 'build'
-    publishLocation: 'Container'
-
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -43,3 +37,10 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(build.artifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(build.artifactStagingDirectory)'
+    ArtifactName: 'build'
+    publishLocation: 'Container'
